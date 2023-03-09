@@ -4,6 +4,9 @@ export function queryPoolListByPage(parameter) {
   return axios({
     url: 'https://test.ezswap.io/api/recommend/queryPoolListByPage',
     method: 'post',
-    data: parameter
-  })
+    data: parameter,
+  });
+}
+export function a() {
+
 }

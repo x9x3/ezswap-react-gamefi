@@ -1,11 +1,13 @@
-import { Button, Box, FormControl, InputLabel, Input, FormHelperText, Stack } from '@mui/material'
-function CreatePool() {
+import {
+  Button, Box, FormControl, InputLabel, Input, FormHelperText, Stack,
+} from '@mui/material';
 
+function CreatePool() {
   return (
     <Box>
       <Stack
         sx={{
-          width: 400
+          width: 400,
         }}
       >
         <FormControl>
@@ -16,16 +18,19 @@ function CreatePool() {
       <Stack>
         <Button
           sx={{
-            width: 200
+            width: 200,
           }}
           variant="contained"
           onClick={() => {
             console.log(1);
           }}
-        >Create Pool</Button>
+        >
+          Create Pool
+
+        </Button>
       </Stack>
-    </Box >
-  )
+    </Box>
+  );
 }
 
-export default CreatePool
+export default CreatePool;

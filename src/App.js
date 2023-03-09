@@ -1,50 +1,50 @@
-import { WagmiConfig, createClient, configureChains } from 'wagmi'
-import Header from './components/Header'
-import CreatePool from './components/CreatePool'
-import PoolList from './components/PoolList'
+import { WagmiConfig, createClient, configureChains } from 'wagmi';
 
+import { alchemyProvider } from 'wagmi/providers/alchemy';
 import {
   getDefaultWallets,
   RainbowKitProvider,
 } from '@rainbow-me/rainbowkit';
-import { mainnet, polygon, optimism, arbitrum } from 'wagmi/chains';
-import { alchemyProvider } from 'wagmi/providers/alchemy';
+import { mainnet, polygon, goerli } from 'wagmi/chains';
 import { publicProvider } from 'wagmi/providers/public';
+import PoolList from './components/PoolList';
+import CreatePool from './components/CreatePool';
+import Header from './components/Header';
 
 const { chains, provider } = configureChains(
-  [mainnet, polygon, optimism, arbitrum],
+  [mainnet, polygon, goerli],
   [
-    alchemyProvider({ apiKey: process.env.ALCHEMY_ID }),
-    publicProvider()
-  ]
+    alchemyProvider({ apiKey: 'eeb2JnW2JdlOkqPH6NZVhVpRSXKaSW8D' }),
+    publicProvider(),
+  ],
 );
 
 const { connectors } = getDefaultWallets({
   appName: 'My RainbowKit App',
-  chains
+  chains,
 });
 
 const wagmiClient = createClient({
   autoConnect: true,
   connectors,
-  provider
-})
+  provider,
+});
 
 function App() {
   return (
-    // <WagmiConfig client={wagmiClient}>
-    //   <RainbowKitProvider chains={chains}>
-    //     <Header />
-    //     {/* <CreatePool /> */}
-    //     <PoolList />
-    //   </RainbowKitProvider>
-    // </WagmiConfig>
-    <div>
-      {/* <Header /> */}
-      {/* <CreatePool /> */}
-      <PoolList />
-    </div>
-  )
+    <WagmiConfig client={wagmiClient}>
+      <RainbowKitProvider chains={chains}>
+        <Header />
+        {/* <CreatePool /> */}
+        <PoolList />
+      </RainbowKitProvider>
+    </WagmiConfig>
+    // <div>
+    //   {/* <Header /> */}
+    //   {/* <CreatePool /> */}
+    //   <PoolList />
+    // </div>
+  );
 }
 
 export default App;
