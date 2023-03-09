@@ -3,12 +3,12 @@ import { DataGrid } from '@mui/x-data-grid';
 import { Typography, Box } from '@mui/material';
 import { mathLib } from 'ezswap_math';
 const getType = (val) => {
-  return ['','Exponential', 'Linear'][parseInt(val)]
+  return ['', 'Exponential', 'Linear'][parseInt(val)]
 }
 // return ['buy', 'sell', 'trade'][parseInt(val)]
 
 const columns = [
-  { field: 'id', headerName: 'ID', width: 100 },
+  { field: 'id', headerName: 'ID', width: 200 },
   {
     field: 'type', headerName: 'type', width: 100,
     valueGetter: (data) => (getType(data?.row?.type)),
@@ -21,27 +21,23 @@ const columns = [
   { field: 'tokenBalance', headerName: 'tokenBalance', width: 200 },
 ];
 const calculatedColumns = [
-  { field: 'id', headerName: 'ID', width: 100 },
+  { field: 'id', headerName: 'ID', width: 200 },
   {
     field: 'type', headerName: 'type', width: 100,
-    valueGetter: (data) => (getType(data?.row?.type)),
   },
-  { field: 'currentPrice', headerName: 'spotPrice', width: 200 },
-  { field: 'delta', headerName: 'delta', width: 200 },
-  { field: 'fee', headerName: 'Fee', width: 200 },
-  { field: 'gfee', headerName: 'gfee', width: 100 },
-  { field: 'protocolFee', headerName: 'protocolFee', width: 100 },
-  { field: 'tokenBalance', headerName: 'tokenBalance', width: 200 },
+  { field: 'currentPrice', headerName: 'currentPrice', width: 200 },
+  { field: 'nextPrice', headerName: 'nextPrice', width: 200 },
 ];
 
 export default function NftTable({ poolList }) {
   const [calculatedlist, setCalculatedlist] = React.useState([])
   React.useEffect(() => {
+    console.log('poolList', poolList);
     const tempList = poolList.map(pool => {
       console.log('pool', pool);
-      const { spotPrice, delta, protocolFee, fee, gfee,type } = pool
+      const { spotPrice, delta, protocolFee, fee, gfee, type } = pool
       console.log('getType(type)', getType(type));
-      const priceItem = mathLib?.[getType(type)]?.buy(
+      const priceItem = mathLib?.[getType(type)]?.sell(
         spotPrice,
         delta,
         fee,
@@ -50,8 +46,14 @@ export default function NftTable({ poolList }) {
         1,
         'read'
       )
+      const temp = {
+        id: pool.id,
+        type: getType(pool.type),
+        currentPrice: priceItem?.currentPrice?.userBuyPrice,
+        nextPrice: priceItem?.nextPrice?.userBuyPrice,
+      }
       console.log('priceItem', priceItem);
-      return pool
+      return temp
     })
     setCalculatedlist(tempList)
   }, [poolList])

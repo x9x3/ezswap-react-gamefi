@@ -32,13 +32,18 @@ const wagmiClient = createClient({
 
 function App() {
   return (
-    <WagmiConfig client={wagmiClient}>
-      <RainbowKitProvider chains={chains}>
-        <Header />
-        {/* <CreatePool /> */}
-        <PoolList />
-      </RainbowKitProvider>
-    </WagmiConfig>
+    // <WagmiConfig client={wagmiClient}>
+    //   <RainbowKitProvider chains={chains}>
+    //     <Header />
+    //     {/* <CreatePool /> */}
+    //     <PoolList />
+    //   </RainbowKitProvider>
+    // </WagmiConfig>
+    <div>
+      {/* <Header /> */}
+      {/* <CreatePool /> */}
+      <PoolList />
+    </div>
   )
 }
 
