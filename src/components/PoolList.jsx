@@ -12,9 +12,11 @@ function PoolList() {
       "size": 90,
       "page": 1,
       "filterRepeat": 1,
+      // fromPlatform: 1,
       "mode": "pro"
     })
-    setPoolList(res?.data?.data?.list || [])
+    const tempList = res?.data?.data?.list?.filter(i => i.fromPlatform === 1)
+    setPoolList(tempList)
   }
 
   useEffect(() => {
@@ -26,10 +28,12 @@ function PoolList() {
         <Grid item md={12}>
           <Stack
             sx={{
-              width: 400
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              m: 4
             }}
           >
-            <FormControl>
+            <FormControl sx={{ width: 400 }}>
               <InputLabel htmlFor="my-input">contract address</InputLabel>
               <Input
                 id="my-input"
@@ -40,8 +44,6 @@ function PoolList() {
                 }}
               />
             </FormControl>
-          </Stack>
-          <Stack>
             <Button
               sx={{
                 width: 200,
@@ -55,7 +57,7 @@ function PoolList() {
           </Stack>
         </Grid>
 
-        <Grid item md={12}>
+        <Grid item md={12} sx={{ m: 4 }}>
           <NftTable poolList={poolList} />
         </Grid>
       </Grid>
