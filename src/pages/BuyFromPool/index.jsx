@@ -2,29 +2,33 @@ import {
   Button, Box, FormControl, InputLabel, Input, FormHelperText, Stack, Grid,
 } from '@mui/material';
 import { useState, useEffect } from 'react';
-import { queryPoolListByPage } from '../service/pool';
-import NftTable from './NftTable';
+import { queryPoolListByPage } from '../../service/pool';
+import NftTable from '../../components/NftTable';
 
-function PoolList() {
-  const [contractAddress, setContractAddress] = useState('0x670d854c7da9e7fa55c1958a1aeb368b48496020');
+function BuyFromPool() {
+  const [contractAddress, setContractAddress] = useState('0x8e81970ceb63c236534a763c0ecb611d2d16189f');
+  // 0x70a3fd679762eafd655d293cb8b4a76c11a4da4a
   const [poolList, setPoolList] = useState([]);
-
   const getPoolList = async () => {
-    const res = await queryPoolListByPage({
-      contractAddress,
-      size: 90,
-      page: 1,
-      filterRepeat: 1,
-      // fromPlatform: 1,
-      mode: 'pro',
-    });
-    const tempList = res?.data?.data?.list?.filter((i) => i.fromPlatform === 1);
-    setPoolList(tempList);
+    try {
+      const res = await queryPoolListByPage({
+        contractAddress,
+        // network: 'eth',
+        network: 'goerli',
+      });
+      const tempList = res?.data?.data?.filter((i) => i.fromPlatform === 1 && i.type !== 'buy');
+      // tempList = tempList?.filter((p) => (p.nftCount > 0));
+      setPoolList(tempList);
+    } catch (error) {
+      console.log('error', error);
+      setPoolList([]);
+    }
   };
 
   useEffect(() => {
     getPoolList();
   }, []);
+
   return (
     <Box sx={{ my: 4 }}>
       <Grid container>
@@ -72,4 +76,4 @@ function PoolList() {
   );
 }
 
-export default PoolList;
+export default BuyFromPool;

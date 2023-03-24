@@ -7,8 +7,13 @@ import {
 } from '@rainbow-me/rainbowkit';
 import { mainnet, polygon, goerli } from 'wagmi/chains';
 import { publicProvider } from 'wagmi/providers/public';
-import PoolList from './components/PoolList';
-import CreatePool from './components/CreatePool';
+import {
+  createBrowserRouter, RouterProvider, Route, Routes,
+} from 'react-router-dom';
+import 'react-toastify/dist/ReactToastify.css';
+import BuyFromPool from './pages/BuyFromPool';
+import SellToPool from './pages/SellToPool';
+import Home from './pages/Home';
 import Header from './components/Header';
 
 const { chains, provider } = configureChains(
@@ -30,20 +35,29 @@ const wagmiClient = createClient({
   provider,
 });
 
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <Home />,
+  },
+  {
+    path: 'buy',
+    element: <BuyFromPool />,
+  },
+  {
+    path: 'sell',
+    element: <SellToPool />,
+  },
+]);
+
 function App() {
   return (
     <WagmiConfig client={wagmiClient}>
       <RainbowKitProvider chains={chains}>
         <Header />
-        {/* <CreatePool /> */}
-        <PoolList />
+        <RouterProvider router={router} />
       </RainbowKitProvider>
     </WagmiConfig>
-    // <div>
-    //   {/* <Header /> */}
-    //   {/* <CreatePool /> */}
-    //   <PoolList />
-    // </div>
   );
 }
 
