@@ -34,10 +34,11 @@ export const buyMultipleNFT = async ({
   const ticketContract = new ethers.Contract(routerAddress, buyTicketAbi, signer);
   let totalValue = 0;
   const NFTData = [];
+  const conunt = 1;
   selectedList.forEach((item) => {
     const total = utils.parseEther(formatCeilNumber(item.currentPrice)?.toString()).toString();
     totalValue += Number(total);
-    NFTData.push([[item.id, [Number(item.tokenId)]], total]);
+    NFTData.push([[item.id, [Number(item.tokenId)], [conunt]], total]);
   });
   const approveTx = await ticketContract.robustSwapETHForSpecificNFTs(
     NFTData,
