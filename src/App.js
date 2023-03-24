@@ -14,6 +14,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import BuyFromPool from './pages/BuyFromPool';
 import SellToPool from './pages/SellToPool';
 import Home from './pages/Home';
+import MathLib from './pages/MathLib';
 import Header from './components/Header';
 
 const { chains, provider } = configureChains(
@@ -47,6 +48,10 @@ const router = createBrowserRouter([
   {
     path: 'sell',
     element: <SellToPool />,
+  },
+  {
+    path: 'mathlib',
+    element: <MathLib />,
   },
 ]);
 
