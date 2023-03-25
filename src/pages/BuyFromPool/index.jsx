@@ -6,7 +6,8 @@ import { queryPoolListByPage } from '../../service/pool';
 import NftTable from '../../components/NftTable';
 
 function BuyFromPool() {
-  const [contractAddress, setContractAddress] = useState('0x8e81970ceb63c236534a763c0ecb611d2d16189f');
+  // 0xf8e23bc73bba99d3f3e40a4372ed7de52b004bdb
+  const [contractAddress, setContractAddress] = useState('0x331b7a63ff1bba0736c2164e03b1c43167200708');
   // 0x70a3fd679762eafd655d293cb8b4a76c11a4da4a
   const [poolList, setPoolList] = useState([]);
   const getPoolList = async () => {
@@ -14,7 +15,8 @@ function BuyFromPool() {
       const res = await queryPoolListByPage({
         contractAddress,
         // network: 'eth',
-        network: 'goerli',
+        // network: 'goerli',
+        network: 'polygon',
       });
       const tempList = res?.data?.data?.filter((i) => i.fromPlatform === 1 && i.type !== 'buy');
       // tempList = tempList?.filter((p) => (p.nftCount > 0));

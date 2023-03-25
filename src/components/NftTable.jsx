@@ -9,17 +9,13 @@ import { toast } from 'react-toastify';
 import {
   useAccount, useConnect, useDisconnect, useClient,
 } from 'wagmi';
-import { buyMultipleNFT } from '../toolkit/transaction';
+import { buyMultipleNFT, sellMultipleNFT } from '../toolkit/transaction';
 
-const curveType = {
-  exponential: 'Exponential',
-  linear: 'Linear',
-};
 const NFTcolumns = [
   { field: 'id', headerName: 'ID', width: 100 },
 ];
 const columns = [
-  { field: 'id', headerName: 'ID', width: 100 },
+  { field: 'id', headerName: 'Pool Address', width: 100 },
   {
     field: 'nftIds',
     headerName: 'nftIds',
@@ -47,7 +43,7 @@ const columns = [
   },
   {
     field: 'fee',
-    headerName: 'Fee',
+    headerName: 'swap fee',
     width: 200,
     valueGetter: (data) => (Number(utils.formatEther(data?.row?.fee))),
   },
@@ -75,27 +71,28 @@ const calculatedColumns = [
 
 export default function NftTable({ poolList = [], actionType = 'Buy' }) {
   const { address, isConnected } = useAccount();
-  const client = useClient();
+  // const client = useClient();
 
-  const [calculatedlist, setCalculatedlist] = React.useState([]);
+  // const [calculatedlist, setCalculatedlist] = React.useState([]);
   const [selectedKeys, setSelectedKeys] = React.useState([]);
-  const [index, setIndex] = React.useState(0);
+  // const [index, setIndex] = React.useState(0);
 
-  React.useEffect(() => {
+  /* React.useEffect(() => {
     const tempList = poolList
       // ?.filter((p) => (p.id === '0x4cddd875f3cbef84ce7a0547fea35d96d37d17ea'))
       ?.map((pool) => {
         const {
           spotPrice, delta, protocolFee, fee, gfee, type, bondingCurve, nftIds,
         } = pool;
-        const poolType = curveType[bondingCurve];
         const action = type;
-        const priceItem = mathLib?.[poolType]?.[action](
+        // todo 项目方协议费,自定义设置 例:0.5%计算时换算成0.005
+        const projectFee = 0.005;
+        const priceItem = mathLib?.[bondingCurve]?.[action](
           Number(utils.formatEther(spotPrice)),
           Number(utils.formatEther(delta)),
           Number(utils.formatEther(fee)),
           Number(utils.formatEther(protocolFee)),
-          0,
+          projectFee,
           index,
         );
         const temp = {
@@ -111,28 +108,36 @@ export default function NftTable({ poolList = [], actionType = 'Buy' }) {
         return temp;
       });
     setCalculatedlist(tempList);
-  }, [poolList, index]);
+  }, [poolList, index]); */
 
-  const buyNFT = () => {
-    console.log('calculatedlist', calculatedlist);
+  const buyNFT = (ActionType) => {
     if (!address) {
       toast.warn('Please connect the wallet!');
     }
     if (!isConnected) {
       toast.warn('Please connect the wallet!');
     }
-    // console.log();
-    const selectedList = selectedKeys?.map((key) => calculatedlist.find((c) => c.id === key));
-    buyMultipleNFT({
-      address,
-      selectedList,
-    });
+    const selectedList = selectedKeys?.map((key) => poolList.find((c) => c.id === key));
+    if (ActionType === 'buy') {
+      // 从池子里购买NFT,
+      buyMultipleNFT({
+        address,
+        selectedList,
+      });
+    } else {
+      // 将自己的NFT卖给池子
+      // address:nft出售方
+      sellMultipleNFT({
+        address,
+        selectedList,
+      });
+    }
   };
 
   return (
     <Box sx={{ height: 200, width: '100%' }}>
 
-      {actionType === 'Sell'
+      {/* {actionType === 'Sell'
         ? (
           <Box>
             <Typography variant="h5" sx={{ my: 2 }}>My NFT List</Typography>
@@ -144,17 +149,21 @@ export default function NftTable({ poolList = [], actionType = 'Buy' }) {
               checkboxSelection
             />
           </Box>
-        ) : null}
+        ) : null} */}
 
-      <Typography variant="h5" sx={{ my: 2 }}>Original data</Typography>
+      <Typography variant="h5" sx={{ my: 2 }}>Original Pool Data</Typography>
       <DataGrid
         rows={poolList}
         columns={columns}
         pageSize={5}
         rowsPerPageOptions={[5]}
         checkboxSelection
+        onRowSelectionModelChange={(keys) => {
+          console.log('keysorigin', keys);
+          setSelectedKeys(keys);
+        }}
       />
-      <Typography variant="h5" sx={{ my: 2 }}>
+      {/* <Typography variant="h5" sx={{ my: 2 }}>
         Calculated data
         <TextField
           type="number"
@@ -163,25 +172,27 @@ export default function NftTable({ poolList = [], actionType = 'Buy' }) {
           value={index}
           sx={{ ml: 2 }}
           onChange={(e) => {
+            console.log('Number(e?.target?.value)', Number(e?.target?.value));
             setIndex(Number(e?.target?.value));
           }}
         />
       </Typography>
 
-      <DataGrid
+       <DataGrid
         rows={calculatedlist}
         columns={calculatedColumns}
         pageSize={5}
         rowsPerPageOptions={[5]}
         checkboxSelection
         onRowSelectionModelChange={(keys) => {
+          console.log('keys', keys);
           setSelectedKeys(keys);
         }}
-      />
+      /> */}
       <Button
         variant="contained"
         onClick={() => {
-          buyNFT();
+          buyNFT(actionType);
         }}
       >
         {actionType}
