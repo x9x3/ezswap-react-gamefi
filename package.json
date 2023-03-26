@@ -2,7 +2,7 @@
   "name": "ezswap-react-gamefi",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://github.com/x9x3/ezswap-react-gamefi",
+  "homepage": "https://x9x3.github.io/ezswap-react-gamefi/",
   "dependencies": {
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
