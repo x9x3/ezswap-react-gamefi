@@ -8,7 +8,7 @@ import {
 import { mainnet, polygon, goerli } from 'wagmi/chains';
 import { publicProvider } from 'wagmi/providers/public';
 import {
-  createBrowserRouter, RouterProvider, Route, Routes,
+  createBrowserRouter, RouterProvider, Route, Routes, createHashRouter,
 } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 import BuyFromPool from './pages/BuyFromPool';
@@ -36,17 +36,17 @@ const wagmiClient = createClient({
   provider,
 });
 
-const router = createBrowserRouter([
+const router = createHashRouter([
   {
     path: '/',
     element: <Home />,
   },
   {
-    path: 'buy',
+    path: '/buy',
     element: <BuyFromPool />,
   },
   {
-    path: 'sell',
+    path: '/sell',
     element: <SellToPool />,
   },
   {
