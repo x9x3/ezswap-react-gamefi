@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/ezswap-react-gamefi/static/css/main.dfd0d379.css",
-    "main.js": "/ezswap-react-gamefi/static/js/main.901ee70b.js",
+    "main.js": "/ezswap-react-gamefi/static/js/main.a3529383.js",
     "static/js/963.a0ba076a.chunk.js": "/ezswap-react-gamefi/static/js/963.a0ba076a.chunk.js",
     "static/js/448.5da5afb0.chunk.js": "/ezswap-react-gamefi/static/js/448.5da5afb0.chunk.js",
     "static/js/845.1723ee85.chunk.js": "/ezswap-react-gamefi/static/js/845.1723ee85.chunk.js",
@@ -42,6 +42,6 @@
   },
   "entrypoints": [
     "static/css/main.dfd0d379.css",
-    "static/js/main.901ee70b.js"
+    "static/js/main.a3529383.js"
   ]
 }
