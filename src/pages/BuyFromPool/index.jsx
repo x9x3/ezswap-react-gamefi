@@ -4,6 +4,7 @@ import {
 import { useState, useEffect } from 'react';
 import { queryPoolListByPage } from '../../service/pool';
 import NftTable from '../../components/NftTable';
+import Header from '../../components/Header';
 
 function BuyFromPool() {
   // 0xf8e23bc73bba99d3f3e40a4372ed7de52b004bdb
@@ -32,7 +33,8 @@ function BuyFromPool() {
   }, []);
 
   return (
-    <Box sx={{ my: 4 }}>
+    <Box sx={{ my: 2 }}>
+      <Header />
       <Grid container>
         <Grid item md={12}>
           <Stack

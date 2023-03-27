@@ -15,7 +15,6 @@ import BuyFromPool from './pages/BuyFromPool';
 import SellToPool from './pages/SellToPool';
 import Home from './pages/Home';
 import MathLib from './pages/MathLib';
-import Header from './components/Header';
 
 const { chains, provider } = configureChains(
   [mainnet, polygon, goerli],
@@ -59,7 +58,6 @@ function App() {
   return (
     <WagmiConfig client={wagmiClient}>
       <RainbowKitProvider chains={chains}>
-        <Header />
         <RouterProvider router={router} />
       </RainbowKitProvider>
     </WagmiConfig>

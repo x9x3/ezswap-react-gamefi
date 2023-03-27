@@ -1,12 +1,13 @@
 import {
   FormControl, FormLabel, RadioGroup, Radio, Grid, TextField,
-  FormControlLabel, Button,
+  FormControlLabel, Button, Box,
 } from '@mui/material';
 import ReactJson from 'react-json-view';
 import TrendingFlatIcon from '@mui/icons-material/TrendingFlat';
 import { useState, useEffect } from 'react';
 import { useFormik } from 'formik';
 import { mathLib } from 'ezswap_math';
+import Header from '../../components/Header';
 
 const myJsonObject = {
   priceData: {
@@ -68,112 +69,115 @@ function MathLib() {
   }, []);
 
   return (
-    <Grid container p={4}>
-      <Grid item xs={3}>
-        <FormControl onSubmit={formik.handleSubmit}>
-          <FormLabel sx={{ my: 2 }} id="demo-controlled-radio-buttons-group">model</FormLabel>
-          <RadioGroup
-            aria-labelledby="demo-controlled-radio-buttons-group"
-            name="model"
-            value={formik.values.model}
-            onChange={formik.handleChange}
+    <Box sx={{ my: 2 }}>
+      <Header />
+      <Grid container p={4}>
+        <Grid item xs={3}>
+          <FormControl onSubmit={formik.handleSubmit}>
+            <FormLabel sx={{ my: 2 }} id="demo-controlled-radio-buttons-group">model</FormLabel>
+            <RadioGroup
+              aria-labelledby="demo-controlled-radio-buttons-group"
+              name="model"
+              value={formik.values.model}
+              onChange={formik.handleChange}
+            >
+              <FormControlLabel value="Linear" control={<Radio />} label="Linear" />
+              <FormControlLabel value="Exponential" control={<Radio />} label="Exponential" />
+            </RadioGroup>
+            <FormLabel sx={{ my: 2 }} id="demo-controlled-radio-buttons-group">poolType</FormLabel>
+            <RadioGroup
+              aria-labelledby="demo-controlled-radio-buttons-group"
+              name="poolType"
+              value={formik.values.poolType}
+              onChange={formik.handleChange}
+            >
+              <FormControlLabel value="buy" control={<Radio />} label="buy" />
+              <FormControlLabel value="sell" control={<Radio />} label="sell" />
+              <FormControlLabel value="trade" control={<Radio />} label="trade" />
+            </RadioGroup>
+            <TextField
+              type="number"
+              value={formik.values.spotPrice}
+              onChange={formik.handleChange}
+              name="spotPrice"
+              label="spotPrice"
+              variant="outlined"
+              sx={{ my: 2 }}
+            />
+            <TextField
+              type="number"
+              value={formik.values.delta}
+              onChange={formik.handleChange}
+              name="delta"
+              label="delta"
+              variant="outlined"
+              sx={{ my: 2 }}
+            />
+            <TextField
+              type="number"
+              value={formik.values.fee}
+              onChange={formik.handleChange}
+              name="fee"
+              label="fee"
+              variant="outlined"
+              sx={{ my: 2 }}
+            />
+            <TextField
+              type="number"
+              value={formik.values.protocolFee}
+              onChange={formik.handleChange}
+              name="protocolFee"
+              label="protocolFee"
+              variant="outlined"
+              sx={{ my: 2 }}
+            />
+            <TextField
+              type="number"
+              value={formik.values.projectFee}
+              onChange={formik.handleChange}
+              name="projectFee"
+              label="projectFee"
+              variant="outlined"
+              sx={{ my: 2 }}
+            />
+            <TextField
+              type="number"
+              value={formik.values.index}
+              onChange={formik.handleChange}
+              name="index"
+              label="index"
+              variant="outlined"
+              sx={{ my: 2 }}
+            />
+            <FormLabel sx={{ my: 2 }} id="demo-controlled-radio-buttons-group">action</FormLabel>
+            <RadioGroup
+              aria-labelledby="demo-controlled-radio-buttons-group"
+              name="action"
+              value={formik.values.action}
+              onChange={formik.handleChange}
+            >
+              <FormControlLabel value="read" control={<Radio />} label="read" />
+              <FormControlLabel value="create" control={<Radio />} label="create" />
+            </RadioGroup>
+          </FormControl>
+        </Grid>
+        <Grid item xs={3}>
+          <Button
+            variant="contained"
+            startIcon={<TrendingFlatIcon />}
+            sx={{ mt: 10, ml: 2 }}
+            onClick={() => {
+              formik.submitForm();
+            }}
           >
-            <FormControlLabel value="Linear" control={<Radio />} label="Linear" />
-            <FormControlLabel value="Exponential" control={<Radio />} label="Exponential" />
-          </RadioGroup>
-          <FormLabel sx={{ my: 2 }} id="demo-controlled-radio-buttons-group">poolType</FormLabel>
-          <RadioGroup
-            aria-labelledby="demo-controlled-radio-buttons-group"
-            name="poolType"
-            value={formik.values.poolType}
-            onChange={formik.handleChange}
-          >
-            <FormControlLabel value="buy" control={<Radio />} label="buy" />
-            <FormControlLabel value="sell" control={<Radio />} label="sell" />
-            <FormControlLabel value="trade" control={<Radio />} label="trade" />
-          </RadioGroup>
-          <TextField
-            type="number"
-            value={formik.values.spotPrice}
-            onChange={formik.handleChange}
-            name="spotPrice"
-            label="spotPrice"
-            variant="outlined"
-            sx={{ my: 2 }}
-          />
-          <TextField
-            type="number"
-            value={formik.values.delta}
-            onChange={formik.handleChange}
-            name="delta"
-            label="delta"
-            variant="outlined"
-            sx={{ my: 2 }}
-          />
-          <TextField
-            type="number"
-            value={formik.values.fee}
-            onChange={formik.handleChange}
-            name="fee"
-            label="fee"
-            variant="outlined"
-            sx={{ my: 2 }}
-          />
-          <TextField
-            type="number"
-            value={formik.values.protocolFee}
-            onChange={formik.handleChange}
-            name="protocolFee"
-            label="protocolFee"
-            variant="outlined"
-            sx={{ my: 2 }}
-          />
-          <TextField
-            type="number"
-            value={formik.values.projectFee}
-            onChange={formik.handleChange}
-            name="projectFee"
-            label="projectFee"
-            variant="outlined"
-            sx={{ my: 2 }}
-          />
-          <TextField
-            type="number"
-            value={formik.values.index}
-            onChange={formik.handleChange}
-            name="index"
-            label="index"
-            variant="outlined"
-            sx={{ my: 2 }}
-          />
-          <FormLabel sx={{ my: 2 }} id="demo-controlled-radio-buttons-group">action</FormLabel>
-          <RadioGroup
-            aria-labelledby="demo-controlled-radio-buttons-group"
-            name="action"
-            value={formik.values.action}
-            onChange={formik.handleChange}
-          >
-            <FormControlLabel value="read" control={<Radio />} label="read" />
-            <FormControlLabel value="create" control={<Radio />} label="create" />
-          </RadioGroup>
-        </FormControl>
+            calculate
+          </Button>
+        </Grid>
+        <Grid item xs={5}>
+          <ReactJson src={priceJson} theme="monokai" />
+        </Grid>
       </Grid>
-      <Grid item xs={3}>
-        <Button
-          variant="contained"
-          startIcon={<TrendingFlatIcon />}
-          sx={{ mt: 10, ml: 2 }}
-          onClick={() => {
-            formik.submitForm();
-          }}
-        >
-          calculate
-        </Button>
-      </Grid>
-      <Grid item xs={5}>
-        <ReactJson src={priceJson} theme="monokai" />
-      </Grid>
-    </Grid>
+    </Box>
   );
 }
 
